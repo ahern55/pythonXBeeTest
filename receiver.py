@@ -3,13 +3,13 @@ from digi.xbee.devices import XBeeDevice
 
 def main():
     # Instantiate a local XBee object.
-    xbee = XBeeDevice("/dev/tty.usbserial-0001", 9600)
+    xbee = XBeeDevice("/dev/tty.usbserial-A4035W19", 9600)
     try:
         xbee.open()
 
         def data_receive_callback(xbee_message):
             print("From %s >> %s" % (xbee_message.remote_device.get_64bit_addr(),
-                                     xbee_message.data.decode()))
+                                     xbee_message.data))
 
         xbee.add_data_received_callback(data_receive_callback)
         print("Waiting for data...\n")
