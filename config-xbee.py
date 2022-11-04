@@ -4,13 +4,16 @@ import serial
 def waitForByte(ser, search: str):
     found = ''
     while(search not in found):
-        found = ser.readline().decode("utf-8")
-        pass
+        res = ser.readline()
+        try:
+            found = res.decode("utf-8")
+        except:
+            pass
 
     return found
 
 
-region = 0
+region = 1
 
 
 with serial.Serial('/dev/tty.usbserial-0001', 9600, timeout=1) as ser:

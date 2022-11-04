@@ -1,25 +1,15 @@
-from digi.xbee.devices import XBeeDevice
 import time
+import serial
 
 
 def main():
-    # Instantiate a local XBee object.
-    xbee = XBeeDevice("/dev/tty.usbserial-0001", 9600)
-    try:
-        xbee.open()
-    except Exception as e:
-        print(e)
-        print("COM port does not exist or is invalid")
-        return
 
-    data = [0xFF] + [0xAA] * 12
-    while(True):
-
-        xbee.send_data_broadcast(bytes(data))
-        print(f"Sending Data Packet {data}")
-        time.sleep(.1)
-
-    xbee.close()
+    with serial.Serial('/dev/tty.usbserial-0001', 9600, timeout=1) as ser:
+        data = [0xFF] + [0x69] * 12
+        while(True):
+            ser.write(bytes(data))
+            print(f"Sending Data Packet {data}")
+            time.sleep(.1)
 
 
 if __name__ == '__main__':
